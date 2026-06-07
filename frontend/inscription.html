@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - IFRI MentorLink</title>
+    <style>
+        /* Variables de couleur - Alignées strictement sur le Thème Sombre Premium */
+        :root {
+            --bg-color: #0f172a; 
+            --card-bg-color: #1e293b; 
+            --text-primary: #f8fafc; 
+            --text-secondary: #94a3b8; 
+            --accent-teal: #2dd4bf; 
+            --border-inactive: #4b5563; 
+            --button-bg-active: #2dd4bf; 
+            --input-bg: #111827;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .screen-container {
+            width: 100%;
+            max-width: 520px; /* Légèrement plus large pour accueillir confortablement les grilles doubles */
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        /* Carte d'inscription */
+        .register-card {
+            background-color: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 36px 28px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-title {
+            color: var(--text-primary);
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            margin: 0 0 32px 0;
+            letter-spacing: -0.3px;
+        }
+
+        /* Système de Formulaire */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* Alignement double côte à côte (Filière/Niveau et Nom/Prénom) */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        /* Styles des Inputs et Selects */
+        .custom-input, .custom-select {
+            width: 100%;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-inactive);
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 14px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        /* Ajustement pour les sélecteurs afin qu'ils correspondent aux inputs textuels */
+        .custom-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2394a3b8'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 18px;
+            padding-right: 36px;
+            cursor: pointer;
+        }
+
+        .custom-input::placeholder {
+            color: #4b5563;
+        }
+
+        /* États au Focus */
+        .custom-input:focus, .custom-select:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.15);
+        }
+
+        /* Bouton Finaliser */
+        .submit-button {
+            width: 100%;
+            background-color: var(--button-bg-active);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            margin-top: 16px;
+            margin-bottom: 24px;
+            transition: all 0.1s ease;
+        }
+
+        .submit-button:hover {
+            opacity: 0.9;
+        }
+
+        .submit-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Pied de page */
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-align: center;
+            margin: 0;
+        }
+
+        .footer-link {
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen-container">
+        <div class="register-card">
+            
+            <h1 class="main-title">Rejoignez le réseau d'entraide de l'IFRI</h1>
+
+            <form id="register-form" onsubmit="handleRegister(event)">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="lastname">Nom</label>
+                        <input class="custom-input" type="text" id="lastname" placeholder="ex: SOSSOU" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="firstname">Prénom</label>
+                        <input class="custom-input" type="text" id="firstname" placeholder="ex: Jean" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Email Institutionnel</label>
+                    <input class="custom-input" type="email" id="email" placeholder="ex: jean.sossou@ifri.uac.bj" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="school">École</label>
+                    <select class="custom-select" id="school" required>
+                        <option value="" disabled selected hidden>Choisir votre école --</option>
+                        <option value="IFRI">IFRI (Institut de Formation et de Recherche en Informatique)</option>
+                        <option value="Autre">Autre entité de l'UAC</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="branch">Filière</label>
+                        <select class="custom-select" id="branch" required>
+                            <option value="" disabled selected hidden>Sélectionner --</option>
+                            <option value="GL">GL (Génie Logiciel)</option>
+                            <option value="SI">SI (Sécurité Informatique)</option>
+                            <option value="IA">IA (Intelligence Artificielle)</option>
+                            <option value="IM">IM (Internet des Objets & Multimédia)</option>
+                            <option value="SE&IoT">SE&IoT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="level">Niveau d'étude</label>
+                        <select class="custom-select" id="level" required>
+                            <option value="" disabled selected hidden>Sélectionner --</option>
+                            <option value="Licence 1">Licence 1</option>
+                            <option value="Licence 2">Licence 2</option>
+                            <option value="Licence 3">Licence 3</option>
+                            <option value="Master 1">Master 1</option>
+                            <option value="Master 2">Master 2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <input class="custom-input" type="password" id="password" placeholder="Choisissez un mot de passe robuste" required>
+                </div>
+
+                <button class="submit-button" type="submit">Finaliser l'inscription</button>
+            </form>
+
+            <p class="footer-text">
+                Déjà inscrit ? <a class="footer-link" href="connexion.html">Connectez-vous ici</a>
+            </p>
+
+        </div>
+    </div>
+
+    <script>
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            // Collecte des valeurs pour vos futurs traitements / liaisons de bases de données
+            const nom = document.getElementById('lastname').value;
+            const prenom = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+            const filiere = document.getElementById('branch').value;
+            const niveau = document.getElementById('level').value;
+
+            if (nom && prenom && email) {
+                alert(`Inscription réussie pour ${prenom} ${nom} (${filiere} - ${niveau}) !`);
+                
+                // Redirection immédiate vers l'écran de connexion créé précédemment
+                window.location.href = 'connexion.html';
+            }
+        }
+    </script>
+</body>
+</html>

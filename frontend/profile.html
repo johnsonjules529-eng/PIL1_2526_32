@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - IFRI MentorLink</title>
+    <style>
+        /* Couleurs de base - Thème Sombre Premium (Identique à la page 1) */
+        :root {
+            --bg-color: #0f172a; 
+            --card-bg-color: #1e293b; 
+            --text-primary: #f8fafc; 
+            --text-secondary: #94a3b8; 
+            --accent-teal: #2dd4bf; 
+            --border-active: #2dd4bf; 
+            --border-inactive: #4b5563; 
+            --icon-circle-bg: #111827; 
+            --subject-bg: #111827;
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .screen-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        /* --- En-tête de Succès --- */
+        .success-header {
+            text-align: center;
+            margin-bottom: 28px;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .success-icon-circle {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--success-green);
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+        }
+
+        .success-icon-circle svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--success-green);
+        }
+
+        .main-title {
+            color: var(--text-primary);
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0 0 6px 0;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin: 0;
+        }
+
+        /* --- Carte Récapitulative du Profil --- */
+        .profile-summary-card {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-inactive);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .summary-row:first-child {
+            padding-top: 0;
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .summary-value {
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            background-color: var(--icon-circle-bg);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .summary-value.highlight {
+            color: var(--accent-teal);
+            border-color: var(--accent-teal);
+        }
+
+        /* --- Section d'affichage des matières --- */
+        .subjects-block {
+            margin-top: 8px;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .section-title {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0 0 16px 0;
+        }
+
+        .semester-group {
+            margin-bottom: 24px;
+        }
+
+        .semester-badge {
+            color: var(--accent-teal);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Badge/Ligne de la matière validée (Non cliquable ici, juste pour affichage) */
+        .subject-display-item {
+            background-color: var(--subject-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .bullet-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-teal);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* --- Boutons d'Action de bas de page --- */
+        .actions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: var(--accent-teal);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background-color: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-inactive);
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="screen-container">
+        <div class="success-header">
+            <div class="success-icon-circle">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                </svg>
+            </div>
+            <h1 class="main-title">Profil Enregistré !</h1>
+            <p class="subtitle">Vos choix ont été sauvegardés avec succès</p>
+        </div>
+
+        <div class="profile-summary-card">
+            <div class="summary-row">
+                <span class="summary-label">Statut</span>
+                <span class="summary-value highlight" id="view-role">Mentor</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Niveau académique</span>
+                <span class="summary-value" id="view-level">Licence 1</span>
+            </div>
+            <div class="summary-row">
+                <span class="summary-label">Filière choisie</span>
+                <span class="summary-value" id="view-filiere">GL</span>
+            </div>
+        </div>
+
+        <div class="subjects-block">
+            <h2 class="section-title">Vos matières enseignées / étudiées</h2>
+            
+            <div class="semester-group">
+                <span class="semester-badge" id="badge-sem-a">Semestre 1</span>
+                <div class="list-container" id="view-container-sem-a"></div>
+            </div>
+
+            <div class="semester-group">
+                <span class="semester-badge" id="badge-sem-b">Semestre 2</span>
+                <div class="list-container" id="view-container-sem-b"></div>
+            </div>
+        </div>
+
+        <div class="actions-container">
+            <button class="btn-primary" onclick="alert('Redirection vers l\'espace de matching en cours...')">
+                Trouver un binôme (Matching)
+            </button>
+            <button class="btn-secondary" id="back-btn">
+                Modifier mon profil
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. BASE DE DONNÉES STRUCTURÉE (Même logique stricte que la page précédente) ---
+        const dataMatieres = {
+            licence1: {
+                titleA: "Semestre 1", titleB: "Semestre 2",
+                semA: [
+                    "Logique, arithmétique et ses applications", "Algèbre linéaire et applications",
+                    "Analyse et applications", "Analyse combinatoire, calcul des probabilités et applications",
+                    "Statistiques inférentielles et applications", "Architecture et topologie des réseaux informatiques",
+                    "Utilisation et administration sous Windows/Linux", "Outils de base de l'informatique",
+                    "Algorithmique", "Langage C", "Déontologie et droit liés aux TIC", "Techniques d'expression écrite et orale"
+                ],
+                semB: [
+                    "Administration des réseaux sous Windows/Linux", "Suites et séries numériques",
+                    "Équations différentielles et calcul intégral", "Projet intégrateur",
+                    "Théorie des graphes et applications", "Recherche opérationnelle et applications",
+                    "Développement web", "Infographie", "Théorie des bases de données et algèbre relationnelle",
+                    "SGBD et langage SQL", "Programmation python", "Anglais technique"
+                ]
+            },
+            licence2: {
+                "IA": { titleA: "Semestre 3", titleB: "Semestre 4", semA: ["Structures de données", "Analyse Objet", "Administration Linux", "Sécurité de base"], semB: ["Cryptographie", "Routage réseau", "Gestion des risques", "Anglais scientifique"] },
+                "IM": { titleA: "Semestre 3", titleB: "Semestre 4", semA: ["Structures de données", "Analyse Objet", "Administration Linux", "Sécurité de base"], semB: ["Cryptographie", "Routage réseau", "Gestion des risques", "Anglais scientifique"] },
+                "GL": { titleA: "Semestre 3", titleB: "Semestre 4", semA: ["Structures de données", "Analyse Objet", "Administration Linux", "Sécurité de base"], semB: ["Cryptographie", "Routage réseau", "Gestion des risques", "Anglais scientifique"] },
+                "SE&IoT": { titleA: "Semestre 3", titleB: "Semestre 4", semA: ["Structures de données", "Analyse Objet", "Administration Linux", "Sécurité de base"], semB: ["Cryptographie", "Routage réseau", "Gestion des risques", "Anglais scientifique"] },
+                "SI": { titleA: "Semestre 3", titleB: "Semestre 4", semA: ["Structures de données", "Analyse Objet", "Administration Linux", "Sécurité de base"], semB: ["Cryptographie", "Routage réseau", "Gestion des risques", "Anglais scientifique"] }
+            },
+            licence3: {
+                "IA": { titleA: "Semestre 5", titleB: "Semestre 6", semA: ["Matière L3 IA - S5"], semB: ["Matière L3 IA - S6"] },
+                "IM": { titleA: "Semestre 5", titleB: "Semestre 6", semA: ["Matière L3 IM - S5"], semB: ["Matière L3 IM - S6"] },
+                "GL": { titleA: "Semestre 5", titleB: "Semestre 6", semA: ["Matière L3 GL - S5"], semB: ["Matière L3 GL - S6"] },
+                "SE&IoT": { titleA: "Semestre 5", titleB: "Semestre 6", semA: ["Matière L3 IoT - S5"], semB: ["Matière L3 IoT - S6"] },
+                "SI": { titleA: "Semestre 5", titleB: "Semestre 6", semA: ["Matière L3 SI - S5"], semB: ["Matière L3 SI - S6"] }
+            },
+            master1: {
+                "IA": { titleA: "Semestre 7", titleB: "Semestre 8", semA: ["Matière M1 IA - S7"], semB: ["Matière M1 IA - S8"] },
+                "IM": { titleA: "Semestre 7", titleB: "Semestre 8", semA: ["Matière M1 IM - S7"], semB: ["Matière M1 IM - S8"] },
+                "GL": { titleA: "Semestre 7", titleB: "Semestre 8", semA: ["Matière M1 GL - S7"], semB: ["Matière M1 GL - S8"] },
+                "SE&IoT": { titleA: "Semestre 7", titleB: "Semestre 8", semA: ["Matière M1 IoT - S7"], semB: ["Matière M1 IoT - S8"] },
+                "SI": { titleA: "Semestre 7", titleB: "Semestre 8", semA: ["Matière M1 SI - S7"], semB: ["Matière M1 SI - S8"] }
+            },
+            master2: {
+                "IA": { titleA: "Semestre 9", titleB: "Semestre 10", semA: ["Matière M2 IA - S9"], semB: ["Matière M2 IA - S10"] },
+                "IM": { titleA: "Semestre 9", titleB: "Semestre 10", semA: ["Matière M2 IM - S9"], semB: ["M2 IM - S10"] },
+                "GL": { titleA: "Semestre 9", titleB: "Semestre 10", semA: ["Matière M2 GL - S9"], semB: ["M2 GL - S10"] },
+                "SE&IoT": { titleA: "Semestre 9", titleB: "Semestre 10", semA: ["Matière M2 IoT - S9"], semB: ["M2 IoT - S10"] },
+                "SI": { titleA: "Semestre 9", titleB: "Semestre 10", semA: ["Matière M2 SI - S9"], semB: ["M2 SI - S10"] }
+            }
+        };
+
+        // --- 2. LIRE LES DONNÉES SAUVEGARDÉES OU UTILISER LE SIMULATEUR DE SECOURS ---
+        const userProfile = {
+            role: localStorage.getItem('mentorlink_role') || "Mentor",
+            level: localStorage.getItem('mentorlink_level') || "licence1", // Remplacer par "licence2" pour tester l'autre cas
+            filiere: localStorage.getItem('mentorlink_filiere') || "GL"
+        };
+
+        // Dictionnaires de traduction propre des identifiants techniques pour l'affichage visible
+        const levelLabels = {
+            licence1: "Licence 1", licence2: "Licence 2", licence3: "Licence 3",
+            master1: "Master 1", master2: "Master 2"
+        };
+
+        // Injecter les données textuelles dans la carte de profil
+        document.getElementById('view-role').innerText = userProfile.role;
+        document.getElementById('view-level').innerText = levelLabels[userProfile.level] || userProfile.level;
+        document.getElementById('view-filiere').innerText = userProfile.filiere;
+
+        // --- 3. CHARGEMENT ORDONNÉ ET RENDU DES MATIÈRES CORRESPONDANTES ---
+        const badgeSemA = document.getElementById('badge-sem-a');
+        const badgeSemB = document.getElementById('badge-sem-b');
+        const containerA = document.getElementById('view-container-sem-a');
+        const containerB = document.getElementById('view-container-sem-b');
+
+        function renderSubjectList(list, htmlContainer) {
+            htmlContainer.innerHTML = '';
+            if (!list || list.length === 0) {
+                htmlContainer.innerHTML = `<div class="subject-display-item" style="color:var(--text-secondary)">Aucune matière</div>`;
+                return;
+            }
+            list.forEach(subject => {
+                const item = document.createElement('div');
+                item.className = 'subject-display-item';
+                item.innerHTML = `<div class="bullet-dot"></div><span>${subject}</span>`;
+                htmlContainer.appendChild(item);
+            });
+        }
+
+        // Algorithme de tri/sélection de la source de données
+        let currentData = null;
+        if (userProfile.level === 'licence1') {
+            // Règle L1 : Matières générales identiques peu importe la filière
+            currentData = dataMatieres.licence1;
+        } else {
+            // Règle L2, L3, M1, M2 : Filtrage spécifique par filière
+            const targetLevelDataset = dataMatieres[userProfile.level];
+            if (targetLevelDataset && targetLevelDataset[userProfile.filiere]) {
+                currentData = targetLevelDataset[userProfile.filiere];
+            }
+        }
+
+        // Rendu final à l'écran
+        if (currentData) {
+            badgeSemA.innerText = currentData.titleA;
+            badgeSemB.innerText = currentData.titleB;
+            renderSubjectList(currentData.semA, containerA);
+            renderSubjectList(currentData.semB, containerB);
+        }
+
+        // --- 4. BOUTON DE RETOUR (Lien vers la page précédente) ---
+        document.getElementById('back-btn').addEventListener('click', () => {
+            // Modifiez 'index.html' par le nom réel de votre fichier de configuration si nécessaire
+            window.location.href = 'index.html'; 
+        });
+    </script>
+</body>
+</html>

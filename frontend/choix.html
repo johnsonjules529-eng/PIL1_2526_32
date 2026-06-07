@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sélection des matières - IFRI MentorLink</title>
+    <style>
+        /* Couleurs de base - Thème Sombre */
+        :root {
+            --bg-color: #0f172a; /* Bleu très foncé, Slate 950 */
+            --card-bg-color: #1e293b; /* Bleu foncé, Slate 800 */
+            --text-primary: #f8fafc; /* Blanc cassé, Slate 50 */
+            --text-secondary: #94a3b8; /* Gris clair, Slate 400 */
+            --accent-teal: #2dd4bf; /* Turquoise vif, Teal 400 */
+            --border-active: #2dd4bf; /* Bordure active turquoise */
+            --border-inactive: #4b5563; /* Bordure inactive, Slate 600 */
+            --button-bg-active: #2dd4bf; /* Fond du bouton actif */
+            --icon-circle-bg: #111827; /* Fond du cercle d'icône, Slate 900 */
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .screen-container {
+            width: 100%;
+            max-width: 420px; /* Taille écran mobile */
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        /* --- En-tête --- */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .badge-container {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid var(--border-active);
+            border-radius: 9999px;
+            padding: 6px 16px;
+            margin-bottom: 16px;
+        }
+
+        .badge-text {
+            color: var(--accent-teal);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .main-title {
+            color: var(--text-primary);
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* --- Onglets (Tabs) --- */
+        .tabs-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .tab svg {
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+            transition: fill 0.2s ease;
+        }
+
+        /* Onglet Actif */
+        .tab-active {
+            color: var(--accent-teal);
+            border: 2px solid var(--border-active);
+            background-color: rgba(45, 212, 191, 0.05);
+        }
+        .tab-active svg {
+            fill: var(--accent-teal);
+        }
+
+        /* Onglet Inactif */
+        .tab-inactive {
+            color: var(--text-secondary);
+            border: 2px solid var(--border-inactive);
+            background-color: transparent;
+        }
+        .tab-inactive svg {
+            fill: var(--text-secondary);
+        }
+        .tab-inactive:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        /* --- Carte de Profil --- */
+        .profile-card {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .profile-icon-circle {
+            background-color: var(--icon-circle-bg);
+            border: 1px solid var(--border-active);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+
+        .profile-icon-circle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent-teal);
+        }
+
+        .profile-title-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-title {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+        }
+
+        .profile-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* --- Sections de la carte --- */
+        .section-title {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+        }
+
+        /* --- Filière (Tags Cliquables) --- */
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .tag {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid var(--border-inactive);
+            border-radius: 9999px;
+            padding: 10px 18px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Style pour un Tag Sélectionné */
+        .tag.selected {
+            background-color: rgba(45, 212, 191, 0.15);
+            border-color: var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        /* --- Niveau académique (Menu déroulant) --- */
+        .level-section {
+            margin-bottom: 32px;
+        }
+
+        .dropdown-container {
+            position: relative;
+        }
+
+        .custom-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            background-color: var(--icon-circle-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-inactive);
+            border-radius: 8px;
+            padding: 12px 16px;
+            padding-right: 40px;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+        }
+
+        .dropdown-arrow {
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            pointer-events: none;
+            fill: var(--text-secondary);
+        }
+
+        /* --- Bouton final (Actif & Cliquable) --- */
+        .final-action-button {
+            width: 100%;
+            background-color: var(--button-bg-active);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            transition: transform 0.1s ease, opacity 0.2s ease;
+        }
+
+        .final-action-button:hover {
+            opacity: 0.9;
+        }
+
+        .final-action-button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="screen-container">
+        <header class="header">
+            <div class="badge-container">
+                <span class="badge-text">IFRI_MENTORLINK</span>
+            </div>
+            <h1 class="main-title">Sélection des matières</h1>
+            <p class="subtitle">Définissez votre profil pour un matching optimal</p>
+        </header>
+
+        <div class="tabs-container">
+            <div class="tab tab-active" id="tab-mentor">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L1 9l11 7 9-5.73V17h2V9L12 2zm0 11.5L4.85 9 12 4.5l7.15 4.5L12 13.5zM6 13.11v4.39L12 22l6-4.5v-4.39l-6 4.5-6-4.5z"/>
+                </svg>
+                Mentor
+            </div>
+            <div class="tab tab-inactive" id="tab-mentore">
+                <svg viewBox="0 0 24 24">
+                    <path d="M21 4H3c-1.1 0-2 .9-2 2v13c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 15H3V6h18v13zM13 8h6v2h-6V8zm0 3h6v2h-6v-2zm-8 1h6v2H5v-2zM5 9h6v2H5V9z"/>
+                </svg>
+                Mentoré
+            </div>
+        </div>
+
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-icon-circle">
+                    <svg viewBox="0 0 24 24" id="profile-icon">
+                        <path d="M12 2L1 9l11 7 9-5.73V17h2V9L12 2zm0 11.5L4.85 9 12 4.5l7.15 4.5L12 13.5zM6 13.11v4.39L12 22l6-4.5v-4.39l-6 4.5-6-4.5z"/>
+                    </svg>
+                </div>
+                <div class="profile-title-container">
+                    <h2 class="profile-title" id="card-title">Je suis Mentor</h2>
+                    <p class="profile-subtitle" id="card-subtitle">Matières que vous enseignez</p>
+                </div>
+            </div>
+
+            <div class="filiere-section">
+                <h3 class="section-title">Filière</h3>
+                <div class="tags-container">
+                    <div class="tag">IA</div>
+                    <div class="tag">IM</div>
+                    <div class="tag">GL</div>
+                    <div class="tag">SE&IoT</div>
+                    <div class="tag">SI</div>
+                </div>
+            </div>
+
+            <div class="level-section">
+                <h3 class="section-title">Niveau académique</h3>
+                <div class="dropdown-container">
+                    <select class="custom-select" id="level-select">
+                        <option value="" disabled selected>-- Sélectionner un niveau --</option>
+                        <option value="licence1">Licence 1</option>
+                        <option value="licence2">Licence 2</option>
+                        <option value="licence3">Licence 3</option>
+                        <option value="master1">Master 1</option>
+                        <option value="master2">Master 2</option>
+                    </select>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24">
+                        <path d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <button class="final-action-button" id="submit-btn">
+            Enregistrer mon profil Mentor
+        </button>
+    </div>
+
+    <script>
+        // 1. Gestion du changement d'onglets (Mentor / Mentoré)
+        const tabMentor = document.getElementById('tab-mentor');
+        const tabMentore = document.getElementById('tab-mentore');
+        const cardTitle = document.getElementById('card-title');
+        const cardSubtitle = document.getElementById('card-subtitle');
+        const submitBtn = document.getElementById('submit-btn');
+        const profileIcon = document.getElementById('profile-icon');
+
+        // SVG de l'icône Livre pour le profil Mentoré
+        const bookIconPath = '<path d="M21 4H3c-1.1 0-2 .9-2 2v13c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 15H3V6h18v13zM13 8h6v2h-6V8zm0 3h6v2h-6v-2zm-8 1h6v2H5v-2zM5 9h6v2H5V9z"/>';
+        // SVG de l'icône Chapeau pour le profil Mentor
+        const hatIconPath = '<path d="M12 2L1 9l11 7 9-5.73V17h2V9L12 2zm0 11.5L4.85 9 12 4.5l7.15 4.5L12 13.5zM6 13.11v4.39L12 22l6-4.5v-4.39l-6 4.5-6-4.5z"/>';
+
+        tabMentor.addEventListener('click', () => {
+            tabMentor.className = 'tab tab-active';
+            tabMentore.className = 'tab tab-inactive';
+            cardTitle.innerText = 'Je suis Mentor';
+            cardSubtitle.innerText = 'Matières que vous enseignez';
+            submitBtn.innerText = 'Enregistrer mon profil Mentor';
+            profileIcon.innerHTML = hatIconPath;
+        });
+
+        tabMentore.addEventListener('click', () => {
+            tabMentore.className = 'tab tab-active';
+            tabMentor.className = 'tab tab-inactive';
+            cardTitle.innerText = 'Je suis Mentoré';
+            cardSubtitle.innerText = 'Matières que vous étudiez';
+            submitBtn.innerText = 'Enregistrer mon profil Mentoré';
+            profileIcon.innerHTML = bookIconPath;
+        });
+
+        // 2. Gestion de la sélection multiple des Tags (Filières)
+        const tags = document.querySelectorAll('.tag');
+        tags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                tag.classList.toggle('selected');
+            });
+        });
+
+        // 3. Action au clic sur le bouton final
+        submitBtn.addEventListener('click', () => {
+            const selectedLevel = document.getElementById('level-select').value;
+            const selectedTags = Array.from(document.querySelectorAll('.tag.selected')).map(t => t.innerText);
+            
+            if (!selectedLevel) {
+                alert('Veuillez sélectionner un niveau académique avant de continuer.');
+                return;
+            }
+            
+            alert(`Profil mis à jour !\nNiveau : ${selectedLevel}\nFilière(s) : ${selectedTags.join(', ') || 'Aucune'}`);
+        });
+    </script>
+</body>
+</html>

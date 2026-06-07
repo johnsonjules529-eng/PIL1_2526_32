@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - IFRI MentorLink</title>
+    <style>
+        /* Variables de couleur - Thème Sombre Premium */
+        :root {
+            --bg-color: #0f172a; 
+            --card-bg-color: #1e293b; 
+            --text-primary: #f8fafc; 
+            --text-secondary: #94a3b8; 
+            --accent-teal: #2dd4bf; 
+            --border-inactive: #4b5563; 
+            --button-bg-active: #2dd4bf; 
+            --input-bg: #111827;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .screen-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .login-card {
+            background-color: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(45, 212, 191, 0.1);
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+        }
+
+        .logo-container svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--accent-teal);
+        }
+
+        .main-title {
+            color: var(--text-primary);
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin: 0 0 32px 0;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            pointer-events: none;
+            transition: fill 0.2s;
+        }
+
+        .custom-input {
+            width: 100%;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-inactive);
+            border-radius: 8px;
+            padding: 14px 16px 14px 44px;
+            font-size: 14px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .custom-input::placeholder {
+            color: #4b5563;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.15);
+        }
+
+        .custom-input:focus + .input-icon {
+            fill: var(--accent-teal);
+        }
+
+        .submit-button {
+            width: 100%;
+            background-color: var(--button-bg-active);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            margin-top: 12px;
+            margin-bottom: 24px;
+            transition: all 0.1s ease;
+        }
+
+        .submit-button:hover { opacity: 0.9; }
+        .submit-button:active { transform: scale(0.98); }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .footer-link {
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="screen-container">
+        <div class="login-card">
+            
+            <div class="logo-container">
+                <svg viewBox="0 0 24 24">
+                    <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+            </div>
+
+            <h1 class="main-title">IFRI_MentorLink</h1>
+            <p class="subtitle">Connectez-vous pour retrouver votre mentor</p>
+
+            <form id="login-form" onsubmit="handleLogin(event)">
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Adresse Email</label>
+                    <div class="input-wrapper">
+                        <input class="custom-input" type="email" id="email" placeholder="ex: etudiant@ifri.uac.bj" required>
+                        <svg class="input-icon" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mot de passe</label>
+                    <div class="input-wrapper">
+                        <input class="custom-input" type="password" id="password" placeholder="••••••••" required>
+                        <svg class="input-icon" viewBox="0 0 24 24">
+                            <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <button class="submit-button" type="submit">Se connecter</button>
+            </form>
+
+            <p class="footer-text">
+                Nouveau sur la plateforme ? <a class="footer-link" href="index.html">Créez un compte</a>
+            </p>
+
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            // 1. Vérification du mot de passe maître commun
+            if (password === 'LOKOSSOU') {
+                
+                // Sauvegarde de l'utilisateur connecté dans le stockage local
+                localStorage.setItem('mentorlink_logged_email', email);
+
+                // 2. Vérification des privilèges spécifiques du Super-Administrateur
+                if (email === 'lokossoucyrille25@gmail.com') {
+                    localStorage.setItem('mentorlink_user_role', 'super_admin');
+                    alert('Accès Super-Administrateur accordé. Vous avez un contrôle total sur l\'ensemble des comptes.');
+                } else {
+                    localStorage.setItem('mentorlink_user_role', 'standard_user');
+                    alert('Connexion réussie !');
+                }
+
+                // Redirection vers l'application principale
+                window.location.href = 'index.html'; 
+            } else {
+                // Si le mot de passe n'est pas bon
+                alert('Mot de passe incorrect. Veuillez utiliser le mot de passe commun.');
+            }
+        }
+    </script>
+</body>
+</html>
