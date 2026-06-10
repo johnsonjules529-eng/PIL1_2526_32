@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport de Projet - IFRI MentorLink</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        ul {
+            margin-left: 20px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Rapport de Projet - IFRI MentorLink</h1>
+    <h2>Licence IA/IM/GL/SE&IoT/SI - Année 2025-2026</h2>
+
+    <!-- Membres -->
+    <div class="section">
+        <h3>Nom du groupe et membres</h3>
+        <ul>
+            <li>Groupe : Numéro 32</li>
+            <li>ABDOULAYE Nydal — Intelligence Artificielle</li>
+            <li>FADJINOU Fifame Mariette — Sécurité Informatique</li>
+            <li>CODJO Donan Rosine — Génie Logiciel</li>
+            <li>DONFONHAKOU Kpedetin Ariel — Systèmes Embarqués & IoT</li>
+            <li>LESSE GLOGLO Koba Esdras — Internet & Multimédia</li>
+            <li>LOKOSSOU Cyrille — Sécurité Informatique</li>
+            <li>JOHNSON Benito — Génie Logiciel</li>
+        </ul>
+    </div>
+
+    <!-- Organisation interne -->
+    <div class="section">
+        <h3>Organisation interne du groupe</h3>
+        <p>Répartition des rôles et contributions :</p>
+        <ul>
+            <li>Conception et gestion de la base de données : DONFONHAKOU Ariel</li>
+            <li>Développement frontend : ABDOULAYE Nydal, FADJINOU Mariette, LOKOSSOU Cyrille, CODJO Rosine</li>
+            <li>Développement backend : JOHNSON Benito</li>
+            <li>Système de messagerie : LESSE GLOGLO Esdras</li>
+            <li>Rédaction du rapport/documentation : ABDOULAYE Nydal</li>
+        </ul>
+    </div>
+
+    <!-- Conception générale -->
+    <div class="section">
+        <h3>Conception du projet</h3>
+        <p>Le projet IFRI MentorLink est une application web permettant la mise en relation des étudiants pour du mentorat académique et professionnel.</p>
+        <ul>
+            <li>Architecture : Client-Serveur</li>
+            <li>Frontend : HTML, CSS, JavaScript (Bootstrap/Tailwind)</li>
+            <li>Backend : Python avec Django</li>
+            <li>Base de données : PostgreSQL</li>
+            <li>Modules : Gestion des comptes, Matching mentors-mentorés, Messagerie instantanée</li>
+        </ul>
+    </div>
+
+    <!-- Conception détaillée BD -->
+    <div class="section">
+        <h3>Conception détaillée de la base de données</h3>
+        <p>La base de données du projet IFRI MentorLink est relationnelle et comporte les tables suivantes :</p>
+        <ul>
+            <li><strong>Utilisateurs</strong> : id, nom, prénom, email, téléphone, mot_de_passe, filière, compétences, lacunes, disponibilités</li>
+            <li><strong>Offres</strong> : id, utilisateur_id, matière, disponibilité, format</li>
+            <li><strong>Demandes</strong> : id, utilisateur_id, matière, disponibilité, format</li>
+            <li><strong>Messages</strong> : id, expediteur_id, destinataire_id, contenu, date_envoi</li>
+        </ul>
+        <p>Relations principales :</p>
+        <ul>
+            <li>Un utilisateur peut publier plusieurs offres et demandes.</li>
+            <li>Un utilisateur peut envoyer et recevoir plusieurs messages.</li>
+            <li>Les tables <em>offres</em> et <em>demandes</em> sont liées à <em>utilisateurs</em> par une clé étrangère.</li>
+        </ul>
+    </div>
+
+    <!-- Collaboration Git -->
+    <div class="section">
+        <h3>Collaboration et gestion du projet</h3>
+        <p>Le projet a été développé en collaboration via un dépôt GitHub nommé <code>PIL1_2526_32</code>. 
+        Chaque membre du groupe a contribué par des commits réguliers et des pull requests. 
+        Les bonnes pratiques de gestion de version ont été respectées :</p>
+        <ul>
+            <li>Utilisation de branches pour séparer les fonctionnalités.</li>
+            <li>Commits fréquents et documentés par chaque membre.</li>
+            <li>Intégration continue et vérification du code avant fusion.</li>
+            <li>Accès donné aux encadrants et superviseurs pour suivi.</li>
+        </ul>
+    </div>
+
+    <!-- Instructions de déploiement -->
+    <div class="section">
+        <h3>Instructions de déploiement</h3>
+        <ol>
+            <li>Cloner le dépôt GitHub : <code>git clone https://github.com/nom-du-groupe/PIL1_2526_32.git</code></li>
+            <li>Installer les dépendances : <code>pip install -r requirements.txt</code></li>
+            <li>Configurer la base de données PostgreSQL (importer <code>structure.sql</code>)</li>
+            <li>Lancer le serveur Django : <code>python manage.py runserver</code></li>
+            <li>Accéder à l’application via <code>http://localhost:8000</code></li>
+        </ol>
+    </div>
+
+    <!-- Manuel d’utilisation -->
+    <div class="section">
+        <h3>Manuel d’utilisation</h3>
+        <p>Après inscription et connexion :</p>
+        <ul>
+            <li>Compléter son profil (compétences, disponibilités, filière)</li>
+            <li>Publier une offre ou une demande de mentorat</li>
+            <li>Consulter les suggestions de matching</li>
+            <li>Utiliser la messagerie pour organiser les sessions</li>
+        </ul>
+    </div>
+
+    <!-- Calendrier -->
+    <div class="section">
+        <h3>Calendrier du projet</h3>
+        <ul>
+            <li>01 juin 2026 : Présentation du projet et prise en main de Git</li>
+            <li>03 juin 2026 : Échange en ligne sur les bonnes pratiques collaboratives</li>
+            <li>08-09 juin 2026 : Encadrement en présentiel par groupe</li>
+            <li>10 juin 2026 : Dépôt des livrables finaux</li>
+            <li>12-13 juin 2026 : Présentation finale et évaluation</li>
+        </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Encadrants : M. Armand ACCROMBESSI, Mme Maryse GAHOU</p>
+        <p>Supervision : M. Ratheil HOUNDJI</p>
+    </div>
+
+</body>
+</html>
