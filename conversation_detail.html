@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Conversation
+{% endblock %}
+
+{% block content %}
+
+<div class="page-scroll">
+
+<div class="container--wide">
+
+<div class="card">
+
+    <h2 class="card-title">
+
+        Conversation {{ conversation.id }}
+
+    </h2>
+
+    <hr class="divider">
+
+    <div class="chat-container">
+
+        {% for message in messages %}
+
+            <div class="message
+
+                {% if message.expediteur == request.user %}
+                    sent
+                {% else %}
+                    received
+                {% endif %}
+
+            ">
+
+                {{ message.contenu }}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <textarea
+                name="contenu"
+                rows="4"
+                placeholder="Écrire un message..."
+            ></textarea>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            type="submit"
+        >
+            Envoyer
+        </button>
+
+    </form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

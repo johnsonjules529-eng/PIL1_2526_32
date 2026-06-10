@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Mon Profil</h1>
+
+<p>Nom : {{ request.user.username }}</p>
+<p>Email : {{ request.user.email }}</p>
+
+{% endblock %}

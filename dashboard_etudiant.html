@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>Tableau de bord étudiant</h2>
+
+    {% if mentorat %}
+
+        <div class="card mt-4">
+            <div class="card-body">
+
+                <h4>Mon mentor</h4>
+
+                <p>
+                    {{ mentorat.mentor.first_name }}
+                    {{ mentorat.mentor.last_name }}
+                </p>
+
+            </div>
+        </div>
+
+    {% endif %}
+
+    {% if demande_attente %}
+
+        <div class="alert alert-warning mt-4">
+            Une demande de mentorat est en attente.
+        </div>
+
+    {% endif %}
+
+    <div class="row mt-4">
+
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-body text-center">
+
+                    <h5>Mentorats actifs</h5>
+
+                    <h2>{{ mentorats }}</h2>
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card">
+                <div class="card-body text-center">
+
+                    <h5>Demandes en attente</h5>
+
+                    <h2>{{ demandes }}</h2>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

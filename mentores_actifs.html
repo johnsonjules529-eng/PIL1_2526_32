@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>Mes mentorés actifs</h2>
+
+    <hr>
+
+    {% for mentorat in mentorats %}
+
+        <div class="card mb-3">
+
+            <div class="card-body">
+
+                <h5>
+                    {{ mentorat.etudiant.first_name }}
+                    {{ mentorat.etudiant.last_name }}
+                </h5>
+
+                <p>
+                    {{ mentorat.etudiant.email }}
+                </p>
+
+            </div>
+
+        </div>
+
+    {% empty %}
+
+        <div class="alert alert-info">
+            Aucun mentoré actif.
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

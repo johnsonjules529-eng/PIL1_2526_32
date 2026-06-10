@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="page-scroll">
+
+    <div class="container--wide">
+
+        <div class="card">
+
+            <div class="badge">
+                IFRI MentorLink
+            </div>
+
+            <h1 class="card-title">
+                Bienvenue {{ request.user.username }}
+            </h1>
+
+            <p class="card-subtitle">
+                Tableau de bord personnel
+            </p>
+
+            <br>
+
+            <div class="form-row">
+
+                <div class="summary-card">
+                    <div class="summary-row">
+                        <span>Conversations</span>
+                        <strong>{{ conversations_count }}</strong>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <div class="summary-row">
+                        <span>Demandes</span>
+                        <strong>{{ demandes_count }}</strong>
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+
+            <div class="btn-group">
+
+                <a href="/mentorat/profile/" class="btn btn-primary">
+                    Mon Profil
+                </a>
+
+                <a href="/messaging/" class="btn btn-ghost">
+                    Messagerie
+                </a>
+
+                <a href="/mentorat/compatibilite/" class="btn btn-ghost">
+                    Trouver un binôme
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

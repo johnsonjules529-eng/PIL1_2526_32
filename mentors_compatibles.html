@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        Mentors compatibles
+    </h2>
+
+    <div class="row">
+
+        {% for item in resultats %}
+
+        <div class="col-lg-4 mb-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="text-center mb-3">
+
+                        <div
+                            data-compat-ring="{{ item.score }}"
+                            data-ring-size="100">
+                        </div>
+
+                    </div>
+
+                    <h5 class="text-center">
+
+                        {{ item.mentor.user.first_name }}
+                        {{ item.mentor.user.last_name }}
+
+                    </h5>
+
+                    <hr>
+
+                    <p>
+                        <strong>Note :</strong>
+                        {{ item.mentor.note_moyenne }}/10
+                    </p>
+
+                    <p>
+                        <strong>Places :</strong>
+                        {{ item.mentor.nombre_mentores_actifs }}
+                        /
+                        {{ item.mentor.capacite_max }}
+                    </p>
+
+                    <a
+                        href="{% url 'profil_mentor' item.mentor.user.id %}"
+                        class="btn btn-primary w-100">
+
+                        Voir le profil
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2>Tableau de bord mentor</h2>
+
+        <div class="row mt-4">
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Mentorés actifs</h5>
+                <h2>{{ mentorats_actifs }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Demandes en attente</h5>
+                <h2>{{ demandes_attente }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <div class="card">
+            <div class="card-body text-center">
+                <h5>Places restantes</h5>
+                <h2>{{ capacite_restante }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="mt-4">
+
+    <a href="{% url 'demandes_recues' %}"
+        class="btn btn-primary">
+        Voir les demandes reçues
+    </a>
+
+    <a href="{% url 'mentores_actifs' %}"
+        class="btn btn-success">
+        Voir mes mentorés
+    </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

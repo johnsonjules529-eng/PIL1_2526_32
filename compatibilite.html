@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">
+        Mentors disponibles
+    </h1>
+
+    <div class="row">
+
+        {% for mentor in mentors %}
+
+        <div class="col-md-6 mb-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <h4>
+                        {{ mentor.user.first_name }}
+                        {{ mentor.user.last_name }}
+                    </h4>
+
+                    <p>
+                        <strong>Établissement :</strong>
+                        {{ mentor.etablissement }}
+                    </p>
+
+                    <p>
+                        <strong>Filière :</strong>
+                        {{ mentor.filiere }}
+                    </p>
+
+                    <p>
+                        <strong>Niveau :</strong>
+                        {{ mentor.niveau }}
+                    </p>
+
+                    <p>
+                        <strong>Bio :</strong>
+                        {{ mentor.bio }}
+                    </p>
+
+                    <div class="mb-3">
+
+                        <span class="badge bg-success">
+                            Compatibilité : 85%
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="{% url 'demander_mentorat' mentor.user.id %}"
+                        class="btn btn-primary"
+                    >
+                        Demander un mentorat
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p>Aucun mentor disponible.</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

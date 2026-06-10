@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Mon profil</h2>
+
+<form method="post">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit">
+        Enregistrer
+    </button>
+
+</form>
+{% if not user.is_mentor %}
+
+<a href="{% url 'devenir_mentor' %}"
+    class="btn btn-success">
+    Devenir mentor
+</a>
+
+{% endif %}
+
+{% endblock %}

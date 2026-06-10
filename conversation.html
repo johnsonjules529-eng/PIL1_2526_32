@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Messagerie
+{% endblock %}
+
+{% block content %}
+
+<div class="page-scroll">
+
+    <div class="container--wide">
+
+        <div class="card">
+
+            <h2 class="card-title">
+                Conversations
+            </h2>
+
+            <p class="card-subtitle">
+                Vos échanges mentor / mentoré
+            </p>
+
+            <br>
+
+            {% for conversation in conversations %}
+
+            <a
+                href="{% url 'conversation_detail' conversation.id %}"
+                style="text-decoration:none"
+            >
+
+                <div class="summary-card">
+
+                    <div class="summary-row">
+
+                        <div>
+                            <strong>
+                                Conversation #{{ conversation.id }}
+                            </strong>
+                        </div>
+
+                        <div class="summary-value teal">
+                            Ouvrir
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+            {% empty %}
+
+            <p>Aucune conversation.</p>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
