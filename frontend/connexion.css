@@ -1,0 +1,160 @@
+ /* Variables de couleur - Thème Sombre Premium */
+        :root {
+            --bg-color: #0f172a; 
+            --card-bg-color: #1e293b; 
+            --text-primary: #f8fafc; 
+            --text-secondary: #94a3b8; 
+            --accent-teal: #2dd4bf; 
+            --border-inactive: #4b5563; 
+            --button-bg-active: #2dd4bf; 
+            --input-bg: #111827;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .screen-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .login-card {
+            background-color: var(--card-bg-color);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(45, 212, 191, 0.1);
+            border-radius: 50%;
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+        }
+
+        .logo-container svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--accent-teal);
+        }
+
+        .main-title {
+            color: var(--text-primary);
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin: 0 0 32px 0;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+            pointer-events: none;
+            transition: fill 0.2s;
+        }
+
+        .custom-input {
+            width: 100%;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-inactive);
+            border-radius: 8px;
+            padding: 14px 16px 14px 44px;
+            font-size: 14px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        .custom-input::placeholder {
+            color: #4b5563;
+        }
+
+        .custom-input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.15);
+        }
+
+        .custom-input:focus + .input-icon {
+            fill: var(--accent-teal);
+        }
+
+        .submit-button {
+            width: 100%;
+            background-color: var(--button-bg-active);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            box-sizing: border-box;
+            margin-top: 12px;
+            margin-bottom: 24px;
+            transition: all 0.1s ease;
+        }
+
+        .submit-button:hover { opacity: 0.9; }
+        .submit-button:active { transform: scale(0.98); }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .footer-link {
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-link:hover { text-decoration: underline; }

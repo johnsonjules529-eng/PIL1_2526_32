@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trouver un Mentor - IFRI MentorLink</title>
+    <style>
+        :root {
+            --bg-color: #0f172a; 
+            --card-bg-color: #1e293b; 
+            --text-primary: #f8fafc; 
+            --text-secondary: #94a3b8; 
+            --accent-teal: #2dd4bf; 
+            --border-inactive: #334155; 
+            --input-bg: #111827;
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 30px 24px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--accent-teal); }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+        }
+
+        .main-title span { color: var(--accent-teal); }
+
+        .search-filter-section {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-inactive);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            margin-bottom: 32px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            width: 20px;
+            height: 20px;
+            fill: var(--text-secondary);
+        }
+
+        .search-input {
+            width: 100%;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-inactive);
+            border-radius: 8px;
+            padding: 12px 16px 12px 44px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-input:focus { border-color: var(--accent-teal); }
+
+        .preference-badge {
+            background-color: rgba(45, 212, 191, 0.08);
+            border: 1px dashed var(--accent-teal);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .preference-badge strong { color: var(--accent-teal); }
+
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .mentor-card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-inactive);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .mentor-card:hover {
+            border-color: var(--accent-teal);
+            transform: translateY(-4px);
+        }
+
+        .match-score {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .mentor-profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .mentor-avatar {
+            width: 52px;
+            height: 52px;
+            background-color: rgba(45, 212, 191, 0.1);
+            border: 2px solid var(--accent-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--accent-teal);
+        }
+
+        .mentor-info-meta h3 { margin: 0 0 4px 0; font-size: 16px; }
+
+        .mentor-tag-level {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background-color: var(--input-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border-inactive);
+        }
+
+        .mentor-specialties { margin-bottom: 24px; flex-grow: 1; }
+        .specialty-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        .subject-tag {
+            font-size: 11px;
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-inactive);
+        }
+
+        .subject-tag.highlight {
+            border-color: rgba(45, 212, 191, 0.4);
+            background-color: rgba(45, 212, 191, 0.05);
+            color: var(--accent-teal);
+        }
+
+        .contact-btn {
+            width: 100%;
+            background-color: transparent;
+            color: var(--accent-teal);
+            border: 1px solid var(--accent-teal);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .contact-btn:hover {
+            background-color: var(--accent-teal);
+            color: var(--bg-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="top-nav">
+            <a href="/" class="back-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+                Aller à la messagerie
+            </a>
+            <span style="font-size: 13px; color: var(--text-secondary);">Filière : <strong>Sécurité Informatique (SI)</strong></span>
+        </div>
+
+        <div class="header-section">
+            <h1 class="main-title">Vos Mentors <span>Correspondants</span></h1>
+            <p class="subtitle">Des étudiants de niveaux supérieurs prêts à vous guider dans vos révisions</p>
+        </div>
+
+        <div class="search-filter-section">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+                <input type="text" class="search-input" id="search-mentor" onkeyup="filterMentors()" placeholder="Rechercher...">
+            </div>
+        </div>
+
+        <div class="preference-badge">
+            <span>Filtre intelligent Cy'Arts appliqué aux modules de l'IFRI.</span>
+        </div>
+
+        <div class="mentors-grid" id="mentors-list">
+            
+            <div class="mentor-card" data-name="Koffi Mensah">
+                <span class="match-score">98% Match</span>
+                <div>
+                    <div class="mentor-profile">
+                        <div class="mentor-avatar">KM</div>
+                        <div class="mentor-info-meta">
+                            <h3>Koffi Mensah</h3>
+                            <span class="mentor-tag-level">SI - Licence 3</span>
+                        </div>
+                    </div>
+                    <div class="mentor-specialties">
+                        <div class="tags-container">
+                            <span class="subject-tag highlight">INF1126 (Algorithmique / C)</span>
+                            <span class="subject-tag highlight">INF1226 (SGBD / SQL)</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="contact-btn" onclick="redirectToChat('2')">Demander un mentorat</button>
+            </div>
+
+            <div class="mentor-card" data-name="Ablavi Sossou">
+                <span class="match-score">85% Match</span>
+                <div>
+                    <div class="mentor-profile">
+                        <div class="mentor-avatar">AS</div>
+                        <div class="mentor-info-meta">
+                            <h3>Ablavi Sossou</h3>
+                            <span class="mentor-tag-level">GL - Master 1</span>
+                        </div>
+                    </div>
+                    <div class="mentor-specialties">
+                        <div class="tags-container">
+                            <span class="subject-tag highlight">INF1226 (SGBD / SQL)</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="contact-btn" onclick="redirectToChat('3')">Demander un mentorat</button>
+            </div>
+
+            <div class="mentor-card" data-name="Abdel Ganiou">
+                <span class="match-score">75% Match</span>
+                <div>
+                    <div class="mentor-profile">
+                        <div class="mentor-avatar">AG</div>
+                        <div class="mentor-info-meta">
+                            <h3>Abdel Ganiou</h3>
+                            <span class="mentor-tag-level">SI - Licence 2</span>
+                        </div>
+                    </div>
+                    <div class="mentor-specialties">
+                        <div class="tags-container">
+                            <span class="subject-tag highlight">INF1126 (Algorithmique / C)</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="contact-btn" onclick="redirectToChat('1')">Demander un mentorat</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function filterMentors() {
+            const input = document.getElementById('search-mentor').value.toLowerCase();
+            document.querySelectorAll('.mentor-card').forEach(card => {
+                const name = card.getAttribute('data-name').toLowerCase();
+                card.style.display = name.includes(input) ? "flex" : "none";
+            });
+        }
+
+        // Connexion fluide : redirige vers l'accueil de la messagerie avec l'ID du mentor ciblé
+        function redirectToChat(userId) {
+            window.location.href = `/?select=${userId}`;
+        }
+    </script>
+</body>
+</html>

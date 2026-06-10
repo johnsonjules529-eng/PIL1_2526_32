@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentors Correspondants - IFRI MentorLink</title>
+    <link rel="stylesheet" href="matching.css">
+</head>
+<body>
+    <div class="container">
+        <div class="top-nav">
+            <a href="/profil" class="back-link">← Modifier mon profil</a>
+            <span style="font-size: 13px; color: var(--text-secondary);">Statut actuel : <strong>{{ user.role.upper() }}</strong></span>
+        </div>
+
+        <div class="header-section">
+            <h1 class="main-title">Vos Correspondances <span>Triées</span></h1>
+            <p>Algorithme basé sur vos compétences croisées et créneaux horaires communs à l'IFRI</p>
+        </div>
+
+        <div class="mentors-grid">
+            {% for m in mentors %}
+            <div class="mentor-card">
+                <span class="match-score">{{ m.score }}</span>
+                <div>
+                    <div class="mentor-profile">
+                        <div class="mentor-avatar">
+                            {% if m.is_image %}
+                                <img src="{{ m.avatar }}">
+                            {% else %}
+                                {{ m.avatar }}
+                            {% endif %}
+                        </div>
+                        <div class="mentor-info-meta">
+                            <h3>{{ m.name }}</h3>
+                            <span class="mentor-tag-level">{{ m.level }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Modules partagés :</div>
+                        <div class="tags-container">
+                            {% for skill in m.skills %}
+                            <span class="subject-tag">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <button class="contact-btn" onclick="openChat('{{ m.id }}')">Ouvrir la discussion</button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function openChat(id) {
+            window.location.href = `/chat?select=${id}`;
+        }
+    </script>
+</body>
+</html>

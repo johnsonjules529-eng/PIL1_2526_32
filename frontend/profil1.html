@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - IFRI MentorLink</title>
+    <link rel="stylesheet" href="profil1.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h2 style="margin-top:0;">Complétez votre <span>Profil</span></h2>
+            
+            <div class="avatar-picker-section">
+                <div class="profile-avatar" id="avatar-container" onclick="triggerFileSelect()">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar }}" id="avatar-img">
+                    {% else %}
+                        <span id="avatar-initials">{{ user.name[:2].upper() }}</span>
+                    {% endif %}
+                </div>
+                <span class="upload-hint">Cliquez sur le cercle pour modifier votre photo</span>
+                <input type="file" id="file-input" style="display: none;" accept="image/*" onchange="uploadPhoto(this)">
+            </div>
+
+            <form action="/profil" method="POST" class="form-section">
+                <div>
+                    <label>Nom complet</label>
+                    <input type="text" name="name" value="{{ user.name }}" required>
+                </div>
+                <div>
+                    <label>Filière IFRI</label>
+                    <select name="filiere">
+                        <option value="SI" {% if user.filiere == 'SI' %}selected{% endif %}>Sécurité Informatique (SI)</option>
+                        <option value="GL" {% if user.filiere == 'GL' %}selected{% endif %}>Génie Logiciel (GL)</option>
+                        <option value="IA" {% if user.filiere == 'IA' %}selected{% endif %}>Intelligence Artificielle (IA)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Niveau d'étude</label>
+                    <select name="level">
+                        <option value="Licence 1">Licence 1</option>
+                        <option value="Licence 2">Licence 2</option>
+                        <option value="Licence 3">Licence 3</option>
+                        <option value="Master 1">Master 1</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Votre statut recherché</label>
+                    <select name="role">
+                        <option value="mentoré" {% if user.role == 'mentoré' %}selected{% endif %}>Je cherche un Mentor (Mentoré)</option>
+                        <option value="mentor" {% if user.role == 'mentor' %}selected{% endif %}>Je veux aider (Mentor)</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Matières cibles (Compétences)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" name="skills" value="INF1126"> INF1126 (Algorithmique / C)</label>
+                        <label class="checkbox-item"><input type="checkbox" name="skills" value="INF1226"> INF1226 (SGBD / SQL)</label>
+                        <label class="checkbox-item"><input type="checkbox" name="skills" value="INF1227"> INF1227 (Python)</label>
+                    </div>
+                </div>
+                <div>
+                    <label>Disponibilités horaires</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" name="availabilities" value="Lundi"> Lundi</label>
+                        <label class="checkbox-item"><input type="checkbox" name="availabilities" value="Mercredi"> Mercredi</label>
+                        <label class="checkbox-item"><input type="checkbox" name="availabilities" value="Vendredi"> Vendredi</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn-save">Enregistrer et Rechercher les correspondances</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function triggerFileSelect() {
+            document.getElementById('file-input').click();
+        }
+
+        function uploadPhoto(input) {
+            if (!input.files || !input.files[0]) return;
+            
+            const formData = new FormData();
+            formData.append('avatar', input.files[0]);
+
+            fetch('/upload_avatar', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const container = document.getElementById('avatar-container');
+                    container.innerHTML = `<img src="${data.url}" id="avatar-img">`;
+                } else {
+                    alert("Erreur lors du téléversement : " + data.error);
+                }
+            });
+        }
+
+        // Script pour animer l'aspect des capsules cochées
+        document.querySelectorAll('.checkbox-item').forEach(item => {
+            const cb = item.querySelector('input');
+            item.addEventListener('click', () => {
+                setTimeout(() => {
+                    if(cb.checked) item.classList.add('active');
+                    else item.classList.remove('active');
+                }, 5);
+            });
+        });
+    </script>
+</body>
+</html>

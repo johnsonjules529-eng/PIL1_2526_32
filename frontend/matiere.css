@@ -1,0 +1,172 @@
+  /* Variables de couleur - Cohérence stricte avec le Thème Sombre Premium */
+        :root {
+            --bg-color: #0f172a; 
+            --card-bg-color: #1e293b; 
+            --text-primary: #f8fafc; 
+            --text-secondary: #94a3b8; 
+            --accent-teal: #2dd4bf; 
+            --border-inactive: #334155; 
+            --button-bg-active: #2dd4bf;
+            --input-bg: #111827;
+            --card-hover: #24344d;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 40px 24px;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        /* En-tête de la page */
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .main-title span {
+            color: var(--accent-teal);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0;
+        }
+
+        /* Titres des Semestres */
+        .semester-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 32px 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-inactive);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .semester-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 20px;
+            background-color: var(--accent-teal);
+            border-radius: 4px;
+        }
+
+        /* Grille des Matières */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        /* Bouton / Carte Matière Cliquable */
+        .subject-card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-inactive);
+            border-radius: 12px;
+            padding: 18px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card:hover {
+            background-color: var(--card-hover);
+            border-color: var(--text-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Code UE (ex: INF1126) */
+        .subject-code {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-teal);
+            background-color: rgba(45, 212, 191, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            align-self: flex-start;
+            margin-bottom: 12px;
+        }
+
+        /* Libellé des matières */
+        .subject-name {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        /* État SÉLECTIONNÉ (Actif) */
+        .subject-card.selected {
+            border-color: var(--accent-teal);
+            background-color: rgba(45, 212, 191, 0.04);
+            box-shadow: 0 0 0 1px var(--accent-teal), 0 4px 20px -4px rgba(45, 212, 191, 0.2);
+        }
+
+        .subject-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            color: var(--accent-teal);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Barre d'action fixe en bas */
+        .action-bar {
+            margin-top: 48px;
+            text-align: center;
+            border-top: 1px solid var(--border-inactive);
+            padding-top: 32px;
+        }
+
+        .submit-button {
+            background-color: var(--button-bg-active);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 8px;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 14px rgba(45, 212, 191, 0.3);
+        }
+
+        .submit-button:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .submit-button:active {
+            transform: scale(0.98);
+        }

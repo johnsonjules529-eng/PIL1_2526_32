@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messagerie - IFRI MentorLink</title>
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-sidebar: #1e293b;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-teal: #2dd4bf;
+            --bubble-me: #2dd4bf;
+            --bubble-them: #334155;
+            --unread-red: #ef4444;
+        }
+        body {
+            margin: 0; font-family: 'Inter', sans-serif; background-color: var(--bg-main);
+            color: var(--text-main); display: flex; height: 100vh; overflow: hidden;
+        }
+        .sidebar { width: 360px; background-color: var(--bg-sidebar); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; z-index: 5; }
+        .sidebar-header { padding: 20px 16px 10px 16px; }
+        .sidebar-title { font-size: 24px; font-weight: 700; margin: 0 0 16px 0; }
+        .discussion-list { flex: 1; overflow-y: auto; }
+        .discussion-item { display: flex; align-items: center; padding: 12px 16px; cursor: pointer; gap: 12px; }
+        .discussion-item:hover, .discussion-item.active { background-color: rgba(255, 255, 255, 0.05); }
+        .avatar {
+            width: 44px; height: 44px; border-radius: 50%; background-color: var(--border-color);
+            color: var(--accent-teal); display: flex; align-items: center; justify-content: center; font-weight: 700; overflow: hidden;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .item-body { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 4px; }
+        .user-name { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .unread-dot { width: 8px; height: 8px; background-color: var(--unread-red); border-radius: 50%; }
+        .msg-preview { font-size: 13px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        .chat-area { flex: 1; display: flex; flex-direction: column; background-color: var(--bg-main); }
+        .chat-blank { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--text-muted); }
+        .chat-header { padding: 14px 24px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 14px; background-color: rgba(30, 41, 59, 0.4); }
+        .back-btn { display: none; background: none; border: none; color: var(--accent-teal); cursor: pointer; }
+        .back-btn svg { width: 24px; height: 24px; fill: currentColor; }
+        
+        .chat-messages { flex: 1; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+        .message { max-width: 70%; display: flex; flex-direction: column; }
+        .message.me { align-self: flex-end; }
+        .message.them { align-self: flex-start; }
+        .bubble { padding: 12px 16px; border-radius: 18px; font-size: 14px; }
+        .message.me .bubble { background-color: var(--bubble-me); color: #0f172a; border-bottom-right-radius: 4px; }
+        .message.them .bubble { background-color: var(--bubble-them); color: var(--text-main); border-bottom-left-radius: 4px; }
+        .timestamp { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+        .message.me .timestamp { align-self: flex-end; }
+        
+        .chat-input-container { padding: 16px 24px; border-top: 1px solid var(--border-color); }
+        .input-form { display: flex; gap: 12px; }
+        .message-input { flex: 1; background-color: var(--bg-sidebar); border: 1px solid var(--border-color); border-radius: 24px; padding: 12px 20px; color: var(--text-main); outline: none; }
+        .send-btn { background-color: var(--accent-teal); border: none; border-radius: 50%; width: 42px; height: 42px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .send-btn svg { width: 18px; height: 18px; fill: #0f172a; }
+
+        @media (max-width: 768px) {
+            .sidebar { width: 100vw; }
+            .chat-area { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 10; transform: translateX(100vw); transition: transform 0.3s ease; }
+            body.mobile-chat-view .sidebar { transform: translateX(-100vw); }
+            body.mobile-chat-view .chat-area { transform: translateX(0); }
+            .back-btn { display: flex; }
+            .chat-blank { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1 class="sidebar-title">Discussions</h1>
+        </div>
+        <div class="discussion-list">
+            {% for id, u in users.items() %}
+                {% if u.id != current_id %}
+                <div class="discussion-item" id="item-{{ u.id }}" onclick="loadDiscussion('{{ u.id }}')">
+                    <div class="avatar">
+                        {% if u.avatar %}<img src="{{ u.avatar }}">{% else %}{{ u.name[:2].upper() }}{% endif %}
+                    </div>
+                    <div class="item-body">
+                        <div class="user-name">
+                            {{ u.name }}
+                            {% if u.unread %}<span class="unread-dot" id="dot-{{ u.id }}"></span>{% endif %}
+                        </div>
+                        <div class="msg-preview" id="preview-{{ u.id }}">{{ u.preview }}</div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="chat-area" id="chat-container">
+        <div class="chat-blank">Sélectionnez une correspondance pour débuter l'échange.</div>
+    </div>
+
+    <script>
+        let activeUserId = null;
+
+        function loadDiscussion(userId) {
+            activeUserId = userId;
+            document.querySelectorAll('.discussion-item').forEach(i => i.classList.remove('active'));
+            document.getElementById(`item-${userId}`).classList.add('active');
+            
+            const dot = document.getElementById(`dot-${userId}`);
+            if (dot) dot.style.display = 'none';
+
+            document.body.classList.add('mobile-chat-view');
+
+            fetch(`/get_discussion/${userId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) renderChat(data.user, data.messages);
+                });
+        }
+
+        function closeChatMobile() { document.body.classList.remove('mobile-chat-view'); }
+
+        function renderChat(user, messages) {
+            let mHTML = '';
+            messages.forEach(m => {
+                mHTML += `<div class="message ${m.sender}"><div class="bubble">${m.text}</div><span class="timestamp">${m.time}</span></div>`;
+            });
+
+            document.getElementById('chat-container').innerHTML = `
+                <div class="chat-header">
+                    <button class="back-btn" onclick="closeChatMobile()">
+                        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                    </button>
+                    <div>
+                        <h3>${user.name}</h3>
+                        <span>${user.status}</span>
+                    </div>
+                </div>
+                <div class="chat-messages" id="box-messages">${mHTML}</div>
+                <div class="chat-input-container">
+                    <form class="input-form" onsubmit="sendMessage(event)">
+                        <input type="text" class="message-input" id="input-text" placeholder="Écrire un message..." autocomplete="off" required>
+                        <button type="submit" class="send-btn"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
+                    </form>
+                </div>
+            `;
+            const b = document.getElementById('box-messages'); b.scrollTop = b.scrollHeight;
+        }
+
+        function sendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('input-text');
+            const txt = input.value.trim();
+            if(!txt || !activeUserId) return;
+
+            fetch('/send_message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: activeUserId, text: txt })
+            }).then(res => res.json()).then(data => {
+                if(data.success) {
+                    const b = document.getElementById('box-messages');
+                    b.innerHTML += `<div class="message me"><div class="bubble">${data.message.text}</div><span class="timestamp">${data.message.time}</span></div>`;
+                    document.getElementById(`preview-${activeUserId}`).innerText = data.message.text;
+                    input.value = ''; b.scrollTop = b.scrollHeight;
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const id = new URLSearchParams(window.location.search).get('select');
+            if (id) loadDiscussion(id);
+        });
+    </script>
+</body>
+</html>
